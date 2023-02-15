@@ -1,43 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { useAppSelector } from "../hooks";
 import "./Modal.css";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store";
-import { hideModal } from "../store/modalSlice";
+import ModalInput from "./ModalInput";
 
-function Modal() {
-  const modal = useSelector<RootState>((state) => state.modal.modal);
-  const dispatch = useDispatch();
+interface Props {
+  addProduct: (e: React.MouseEvent<HTMLButtonElement>, name: string, url: string, count: string, weight:string) => void;
+  closeModal: () => void
+}
 
-  function closeModal() {
-    dispatch(hideModal())
-  }
+function Modal({ addProduct, closeModal }: Props) {
+  const [name, setName] = useState("");
+  const [url, setURL] = useState("");
+  const [count, setCount] = useState("");
+  const [weight, setWeight] = useState("");
 
-  if (!modal) {
-    return <div />;
-  }
+
+
 
   return (
-    <div className="modal_window" onClick={() => dispatch(hideModal())}>
+    <div className="modal_window" onClick={closeModal}>
       <form className="modal_box" onClick={(e) => e.stopPropagation()}>
-        <label>
-          <p>Name</p>
-          <input className="modal_input" type="text" placeholder="Name" />
-        </label>
-        <label>
-          <p>Image</p>
-          <input className="modal_input" type="text" placeholder="Image url" />
-        </label>
-        <label>
-          <p>Count</p>
-          <input className="modal_input" type="number" placeholder="Count" />
-        </label>
-        <label>
-          <p>Weight (grams)</p>
-          <input className="modal_input" type="number" placeholder="Weight" />
-        </label>
+        <ModalInput label="Name" type="text" value={name} setValue={setName} placeholder="Name" />
+        <ModalInput label="Image" type="text" value={url} setValue={setURL} placeholder="Image url" />
+        <ModalInput label="Count" type="number" value={count} setValue={setCount} placeholder="Count" />
+        <ModalInput label="Weight (grams)" type="number" value={weight} setValue={setWeight} placeholder="Weight" />
         <div className="modal_button_wrap">
-            <button className="modal_button modal_add"  onClick={e => e.preventDefault()}>Add</button>
-            <button className="modal_button modal_cancel" onClick={closeModal}>Cancel</button>
+          <button className="modal_button modal_add" onClick={e => {addProduct(e, name, url, count, weight)}}>
+            Add
+          </button>
+          <button className="modal_button modal_cancel" onClick={closeModal}>
+            Cancel
+          </button>
         </div>
       </form>
     </div>

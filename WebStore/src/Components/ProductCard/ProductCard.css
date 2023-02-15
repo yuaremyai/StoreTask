@@ -1,0 +1,20 @@
+.product_card_wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    justify-items: center;
+    width: 200px;
+}
+
+.product_image {
+    border-radius: 10px;
+    width: auto;
+    height: 200px;
+}
+
+.product_name,
+.product_weight,
+.product_stock {
+    text-align: center;
+    font-size: 24px;
+}
