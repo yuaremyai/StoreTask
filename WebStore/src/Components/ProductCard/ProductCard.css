@@ -1,9 +1,13 @@
 .product_card_wrapper {
     display: flex;
+    margin: 5px 10px;
     flex-direction: column;
-    padding: 15px;
+    padding: 10px;
     justify-items: center;
     width: 200px;
+    background-color: #6ebff5;
+    border-radius: 15px;
+    box-shadow: 1px 3px 10px black;
 }
 
 .product_image {
@@ -17,4 +21,24 @@
 .product_stock {
     text-align: center;
     font-size: 24px;
+}
+
+.product_deletion_buttons{
+    display: flex;
+    justify-content: space-around;
+}
+
+.product_button_delete,
+.product_button_confirm,
+.product_button_cancel {
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.product_button_confirm {
+    background-color: #38cc33;
+}
+
+.product_button_cancel {
+    background-color: #e43c4a;
 }

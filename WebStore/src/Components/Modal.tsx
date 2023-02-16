@@ -4,7 +4,7 @@ import "./Modal.css";
 import ModalInput from "./ModalInput";
 
 interface Props {
-  addProduct: (e: React.MouseEvent<HTMLButtonElement>, name: string, url: string, count: string, weight:string) => void;
+  addProduct: (e: React.MouseEvent<HTMLButtonElement>, name: string, url: string, count: string, weight:string, id: number) => void;
   closeModal: () => void
 }
 
@@ -25,7 +25,7 @@ function Modal({ addProduct, closeModal }: Props) {
         <ModalInput label="Count" type="number" value={count} setValue={setCount} placeholder="Count" />
         <ModalInput label="Weight (grams)" type="number" value={weight} setValue={setWeight} placeholder="Weight" />
         <div className="modal_button_wrap">
-          <button className="modal_button modal_add" onClick={e => {addProduct(e, name, url, count, weight)}}>
+          <button className="modal_button modal_add" onClick={e => {addProduct(e, name, url, count, weight, Date.now())}}>
             Add
           </button>
           <button className="modal_button modal_cancel" onClick={closeModal}>

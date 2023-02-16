@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 
 import Modal from "./Components/Modal";
 import { showModal, hideModal } from "./store/modalSlice";
 import ProductCard from "./Components/ProductCard/ProductCard";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { addToList } from "./store/productsSlice";
+import { addToList, deleteFromList } from "./store/productsSlice";
 
 function App() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products);
+  const products = useAppSelector((state) => state.products.products);
   const modal = useAppSelector((state) => state.modal.modal);
 
   function closeModal() {
@@ -20,16 +20,27 @@ function App() {
     e: React.MouseEvent<HTMLButtonElement>,
     name: string,
     url: string,
-    count: string,
-    weight: string
+    stock: string,
+    weight: string,
+    id: number
   ) {
     e.preventDefault();
-    if (name && url && count && weight) {
+    if (name && url && stock && weight) {
       closeModal();
       dispatch(
-        addToList({ name: name, image: url, stock: count, weight: weight })
+        addToList({
+          name: name,
+          url: url,
+          stock: stock,
+          weight: weight,
+          id: id,
+        })
       );
     }
+  }
+
+  function deleteProduct(id: number){
+    dispatch(deleteFromList(id))
   }
 
   return (
@@ -37,13 +48,15 @@ function App() {
       <button onClick={() => dispatch(showModal())}>Add Product</button>
       {modal ? <Modal addProduct={addProduct} closeModal={closeModal} /> : null}
       <div className="products_wrapper">
-        {products.map((value, index) => (
+        {products.map((value) => (
           <ProductCard
             stock={value.stock}
             name={value.name}
-            image={value.image}
+            image={value.url}
             weight={value.weight}
-            key={index}
+            id={value.id}
+            key={value.id}
+            deleteProduct={deleteProduct}
           />
         ))}
       </div>

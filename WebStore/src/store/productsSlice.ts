@@ -1,27 +1,28 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { IProduct } from "../types";
 
-interface Product{
-    stock: string,
-    image: string,
-    name: string,
-    weight: string
+interface ProductState {
+  products: IProduct[];
 }
 
-const initialState: Product[] = []
+const initialState: ProductState = {
+  products: [],
+};
 
 const productsSlice = createSlice({
-    name: 'modal',
-    initialState,
-    reducers: {
-        addToList(state, action: PayloadAction<Product>) {
-            state.push(action.payload)
-        },
-        // removeProduct(state, action: PayloadAction<Product>) {
-        //     state.modal = false
-        //     payload.payload
-        // }
-    }
-})
+  name: "product",
+  initialState,
+  reducers: {
+    addToList(state, action: PayloadAction<IProduct>) {
+      state.products.push(action.payload);
+    },
+    deleteFromList(state, action: PayloadAction<number>) {
+      state.products = state.products.filter(
+        (element) => element.id !== action.payload
+      );
+    },
+  },
+});
 
-export default productsSlice.reducer
-export const { addToList } = productsSlice.actions
+export default productsSlice.reducer;
+export const { addToList, deleteFromList } = productsSlice.actions;
