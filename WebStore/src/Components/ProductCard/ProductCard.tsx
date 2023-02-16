@@ -24,8 +24,8 @@ function ProductCard( {stock, image, name, weight, id, deleteProduct}: Props) {
           <button className='product_button_confirm' onClick={ () => deleteProduct(id)}>Confirm</button>
           <button className='product_button_cancel' onClick={ () => setConfirm(false)}>Cancel</button>
         </div>
-        : <button className='product_button_delete' onClick={ () => setConfirm(true)}>Delete</button>}
-
+        : <button className='product_button_delete' onClick={ () => setConfirm(true)}>Delete</button>
+        }
     </div>
   )
 }

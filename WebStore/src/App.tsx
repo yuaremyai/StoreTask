@@ -1,61 +1,66 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
-import Modal from "./Components/Modal";
+import Modal from "./Components/Modal/Modal";
 import { showModal, hideModal } from "./store/modalSlice";
 import ProductCard from "./Components/ProductCard/ProductCard";
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { addToList, deleteFromList } from "./store/productsSlice";
+import { addToList, deleteFromList, sortList, setFromDB } from "./store/productsSlice";
+
+import { saveToDB, getProducts, deleteFromDB } from "./api";
+import { IProduct } from "./types";
 
 function App() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
   const modal = useAppSelector((state) => state.modal.modal);
-
+  const [response, setResponse] = useState<IProduct[]>([])
   function closeModal() {
     dispatch(hideModal());
   }
 
   function addProduct(
     e: React.MouseEvent<HTMLButtonElement>,
-    name: string,
-    url: string,
-    stock: string,
-    weight: string,
-    id: number
+    product: IProduct
   ) {
     e.preventDefault();
-    if (name && url && stock && weight) {
+    if (product.name && product.url && product.stock && product.weight && product.height && product.width) {
       closeModal();
+      saveToDB(product);
       dispatch(
-        addToList({
-          name: name,
-          url: url,
-          stock: stock,
-          weight: weight,
-          id: id,
-        })
+        addToList(product)
       );
     }
   }
 
-  function deleteProduct(id: number){
-    dispatch(deleteFromList(id))
+  function deleteProduct(id: number) {
+    dispatch(deleteFromList(id));
+    deleteFromDB(id)
   }
+
+  useEffect(() => {
+    getProducts(setResponse)
+  }, []);
+  
+  useEffect(() => {
+    dispatch(setFromDB(response))
+  }, [response])
 
   return (
     <div className="App">
       <button onClick={() => dispatch(showModal())}>Add Product</button>
+      <button onClick={() => dispatch(sortList())}>Sort</button>
+
       {modal ? <Modal addProduct={addProduct} closeModal={closeModal} /> : null}
       <div className="products_wrapper">
-        {products.map((value) => (
+        {products.map((product) => (
           <ProductCard
-            stock={value.stock}
-            name={value.name}
-            image={value.url}
-            weight={value.weight}
-            id={value.id}
-            key={value.id}
+            stock={product.stock}
+            name={product.name}
+            image={product.url}
+            weight={product.weight}
+            id={product.id}
+            key={product.id}
             deleteProduct={deleteProduct}
           />
         ))}

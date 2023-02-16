@@ -11,7 +11,6 @@ interface Props{
 
 function ModalInput( {label, placeholder, type, setValue, value}: Props ) {
   
-  
   return (
     <label>
       <p>{label}</p>

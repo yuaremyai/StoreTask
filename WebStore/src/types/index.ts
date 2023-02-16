@@ -3,5 +3,7 @@ export interface IProduct {
     url: string,
     name: string,
     weight: string,
+    height: string,
+    width: string,
     id: number
 }
