@@ -5,8 +5,7 @@
     padding: 10px;
     justify-items: center;
     width: 200px;
-    background-color: #6ebff5;
-    border-radius: 15px;
+    background-color: #ced5cd;
     box-shadow: 1px 3px 10px black;
 }
 
@@ -16,9 +15,7 @@
     height: 200px;
 }
 
-.product_name,
-.product_weight,
-.product_stock {
+.product_text {
     text-align: center;
     font-size: 24px;
 }
@@ -31,14 +28,14 @@
 .product_button_delete,
 .product_button_confirm,
 .product_button_cancel {
-    padding: 5px;
+    padding: 5px 10px;
     border-radius: 10px;
 }
 
 .product_button_confirm {
-    background-color: #38cc33;
+    background-color: #82d67f;
 }
 
 .product_button_cancel {
-    background-color: #e43c4a;
+    background-color: #de7981;
 }

@@ -34,22 +34,22 @@ export function getProducts(setResponse: (value: IProduct[]) => void) {
 }
 
 export function deleteFromDB(id: number) {
-    fetch("http://127.0.0.1:5000/delete", {
-        method: "POST",
-        mode: 'cors',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({'id': id}),
-      })
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            console.log(result);
-            return true;
-          },
-          (error) => {
-            return false;
-          }
-        );
+  fetch("http://127.0.0.1:5000/delete", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ id: id }),
+  })
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        console.log(result);
+        return true;
+      },
+      (error) => {
+        return false;
+      }
+    );
 }

@@ -5,10 +5,19 @@
 }
 
 body{
-  background-color: #88b5fc;
+  background-color: #e8dbda;
+
 }
 
 .products_wrapper {
   display: flex;
   flex-wrap: wrap;
+}
+
+.products_new_button{
+  display: block;
+  margin: 15px auto;
+  padding: 10px;
+  width: 150px;
+  border-radius: 10px;
 }

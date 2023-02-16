@@ -14,7 +14,7 @@ function App() {
   const dispatch = useAppDispatch();
   const products = useAppSelector((state) => state.products.products);
   const modal = useAppSelector((state) => state.modal.modal);
-  const [response, setResponse] = useState<IProduct[]>([])
+  const [response, setResponse] = useState<IProduct[]>([]);
   function closeModal() {
     dispatch(hideModal());
   }
@@ -24,32 +24,38 @@ function App() {
     product: IProduct
   ) {
     e.preventDefault();
-    if (product.name && product.url && product.stock && product.weight && product.height && product.width) {
+    if (
+      product.name &&
+      product.url &&
+      product.stock &&
+      product.weight &&
+      product.height &&
+      product.width
+    ) {
       closeModal();
       saveToDB(product);
-      dispatch(
-        addToList(product)
-      );
+      dispatch(addToList(product));
+      dispatch(sortList());
     }
   }
 
   function deleteProduct(id: number) {
     dispatch(deleteFromList(id));
-    deleteFromDB(id)
+    deleteFromDB(id);
   }
 
   useEffect(() => {
-    getProducts(setResponse)
+    getProducts(setResponse);
   }, []);
-  
+
   useEffect(() => {
-    dispatch(setFromDB(response))
-  }, [response])
+    dispatch(setFromDB(response));
+    dispatch(sortList());
+  }, [response]);
 
   return (
     <div className="App">
-      <button onClick={() => dispatch(showModal())}>Add Product</button>
-      <button onClick={() => dispatch(sortList())}>Sort</button>
+      <button className="products_new_button" onClick={() => dispatch(showModal())}>Add new Product</button>
 
       {modal ? <Modal addProduct={addProduct} closeModal={closeModal} /> : null}
       <div className="products_wrapper">

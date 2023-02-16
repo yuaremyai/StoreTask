@@ -81,7 +81,7 @@ function Modal({ addProduct, closeModal }: Props) {
               });
             }}
           >
-            Add
+            Confirm
           </button>
           <button className="modal_button modal_cancel" onClick={closeModal}>
             Cancel

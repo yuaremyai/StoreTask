@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import './ProductCard.css'
+import ProductCardText from './ProductCardText'
 
 interface Props{
   stock: string,
@@ -16,9 +17,9 @@ function ProductCard( {stock, image, name, weight, id, deleteProduct}: Props) {
   return (
     <div className='product_card_wrapper'>
         <img className='product_image' src={image} alt="" />
-        <p className='product_name'>{name}</p>
-        <p className='product_stock'>{stock} in stock</p>
-        <p className='product_weight'>{weight} g</p>
+        <ProductCardText>{name}</ProductCardText>
+        <ProductCardText>{stock} in stock</ProductCardText>
+        <ProductCardText>{weight} g</ProductCardText>
         {confirm ? 
         <div className='product_deletion_buttons'>
           <button className='product_button_confirm' onClick={ () => deleteProduct(id)}>Confirm</button>
