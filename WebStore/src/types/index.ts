@@ -7,3 +7,9 @@ export interface IProduct {
     width: string,
     id: number
 }
+
+export interface IComment {
+    commID: number,
+    text: string,
+    date: string,
+}

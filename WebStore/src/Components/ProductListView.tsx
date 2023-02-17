@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { showModal, hideModal } from "../store/modalSlice";
+import { showModal } from "../store/reducers/modalSlice";
 
 import Modal from "./Modal/Modal";
 import DropDown from "./UI/DropDown";
@@ -22,9 +22,7 @@ function ProductListView({ sort, setSort, addProduct, deleteProduct }: Props) {
   const modal = useAppSelector((state) => state.modal.modal);
   const products = useAppSelector((state) => state.products.products);
 
-  function closeModal() {
-    dispatch(hideModal());
-  }
+
 
   return (
     <>
@@ -36,7 +34,7 @@ function ProductListView({ sort, setSort, addProduct, deleteProduct }: Props) {
       </button>
       <DropDown sort={sort} setSort={setSort} />
       {modal ? (
-        <Modal modalAction={addProduct} closeModal={closeModal} />
+        <Modal modalAction={addProduct} />
       ) : null}
       <div className="products_wrapper">
         {products.map((product) => (

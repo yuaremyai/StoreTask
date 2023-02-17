@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
-import modalSlice from './modalSlice'
-import productsSlice from './productsSlice'
+import modalSlice from './reducers/modalSlice'
+import productsSlice from './reducers/productsSlice'
+import commentsSlice from './reducers/commentsSlice'
 
 const store = configureStore({
   reducer: {
     modal: modalSlice,
-    products: productsSlice
+    products: productsSlice,
+    comments: commentsSlice
   },
 })
 

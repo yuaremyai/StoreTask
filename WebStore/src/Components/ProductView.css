@@ -1,0 +1,68 @@
+.view_wrapper{
+    padding: 15px 15px;
+    display: flex;
+}
+
+.view_image {
+    height: auto;
+    width: 400px;
+    border-radius: 10px;
+}
+
+.view_info {
+    width: 100%;
+}
+.view_title {
+    width: 100%;
+    text-align: center;
+    font-size: 32px;
+}
+
+.view_text{
+    font-size: 24px;
+    margin: 5px 15px;
+}
+
+.view_edit{
+    margin: 5px 15px;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.comments_wrapper{
+    height: 100%;
+    margin-left: 15px;
+
+}
+
+.comments_input{
+    resize: none;
+    width: 90% !important;
+    height: 60px !important;
+    padding: 5px;
+    font-size: 18px;
+    display: block;
+}
+
+.comments_send{
+    background-color: white;
+    font-size: 18;
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.comment_body{
+    width: 90%;
+    margin-top: 10px;
+    box-shadow: 2px 2px 5px gray;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: white;
+}
+
+.comment_text,
+.comment_date{
+    font-size: 18px;
+}

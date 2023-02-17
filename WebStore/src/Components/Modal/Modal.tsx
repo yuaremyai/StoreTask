@@ -1,23 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Modal.css";
 import ModalInput from "../UI/ModalInput";
 import { IProduct } from "../../types";
+import { useAppDispatch } from "../../hooks";
+import { hideModal } from "../../store/reducers/modalSlice";
 
 interface Props {
   modalAction: (
     e: React.MouseEvent<HTMLButtonElement>,
     product: IProduct
   ) => void;
-  closeModal: () => void;
+  product?: IProduct
 }
 
-function Modal({ modalAction, closeModal }: Props) {
+function Modal({ modalAction, product }: Props) {
   const [name, setName] = useState("");
   const [url, setURL] = useState("");
   const [count, setCount] = useState("");
   const [weight, setWeight] = useState("");
   const [height, setHeight] = useState("");
   const [width, setWidth] = useState("");
+
+  const dispatch = useAppDispatch()
+  
+  useEffect( () => {
+    if (product) {
+      setName(product.name)
+      setURL(product.url)
+      setCount(product.stock)
+      setWeight(product.weight)
+      setHeight(product.height)
+      setWidth(product.width)
+    }
+  }, [])
+
+  function closeModal() {
+    dispatch(hideModal());
+  }
 
   return (
     <div className="modal_window" onClick={closeModal}>

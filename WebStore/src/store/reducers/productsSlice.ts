@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IProduct } from "../types";
+import { IProduct } from "../../types";
 
 interface ProductState {
   products: IProduct[];
@@ -37,12 +37,17 @@ const productsSlice = createSlice({
       })
     },
 
-    setFromDB(state, action: PayloadAction<IProduct[]>) {
+    setProducts(state, action: PayloadAction<IProduct[]>) {
       state.products = [...action.payload]
+    },
+    
+    editListElement(state, action: PayloadAction<IProduct>) {
+      state.products = state.products.filter((element) => element.id !== action.payload.id)
+      state.products.push(action.payload)
+      console.log(state.products)
     }
-
   },
 });
 
 export default productsSlice.reducer;
-export const { addToList, deleteFromList, sortList, setFromDB } = productsSlice.actions;
+export const { addToList, deleteFromList, sortList, setProducts, editListElement } = productsSlice.actions;
