@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { useAppSelector } from "../../hooks";
 import "./Modal.css";
-import ModalInput from "../ModalInput";
+import ModalInput from "../UI/ModalInput";
 import { IProduct } from "../../types";
 
 interface Props {
-  addProduct: (
+  modalAction: (
     e: React.MouseEvent<HTMLButtonElement>,
     product: IProduct
   ) => void;
   closeModal: () => void;
 }
 
-function Modal({ addProduct, closeModal }: Props) {
+function Modal({ modalAction, closeModal }: Props) {
   const [name, setName] = useState("");
   const [url, setURL] = useState("");
   const [count, setCount] = useState("");
@@ -70,7 +69,7 @@ function Modal({ addProduct, closeModal }: Props) {
           <button
             className="modal_button modal_add"
             onClick={(e) => {
-              addProduct(e, {
+              modalAction(e, {
                 name: name,
                 url: url,
                 stock: count,

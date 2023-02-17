@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Modal from "./Components/Modal/Modal";
-import { showModal, hideModal } from "./store/modalSlice";
-import ProductCard from "./Components/ProductCard/ProductCard";
-import { useAppDispatch, useAppSelector } from "./hooks";
-import { addToList, deleteFromList, sortList, setFromDB } from "./store/productsSlice";
+import { hideModal } from "./store/modalSlice";
+import { useAppDispatch } from "./hooks";
+import {
+  addToList,
+  deleteFromList,
+  sortList,
+  setFromDB,
+} from "./store/productsSlice";
 
 import { saveToDB, getProducts, deleteFromDB } from "./api";
 import { IProduct } from "./types";
+import ProductListView from "./Components/ProductListView";
+import ProductView from "./Components/ProductView";
 
 function App() {
   const dispatch = useAppDispatch();
-  const products = useAppSelector((state) => state.products.products);
-  const modal = useAppSelector((state) => state.modal.modal);
   const [response, setResponse] = useState<IProduct[]>([]);
-  function closeModal() {
-    dispatch(hideModal());
-  }
+  const [sort, setSort] = useState<keyof IProduct>("name");
 
   function addProduct(
     e: React.MouseEvent<HTMLButtonElement>,
@@ -32,10 +34,10 @@ function App() {
       product.height &&
       product.width
     ) {
-      closeModal();
+      dispatch(hideModal());
       saveToDB(product);
       dispatch(addToList(product));
-      dispatch(sortList());
+      dispatch(sortList(sort));
     }
   }
 
@@ -50,28 +52,32 @@ function App() {
 
   useEffect(() => {
     dispatch(setFromDB(response));
-    dispatch(sortList());
+    dispatch(sortList(sort));
   }, [response]);
 
-  return (
-    <div className="App">
-      <button className="products_new_button" onClick={() => dispatch(showModal())}>Add new Product</button>
+  useEffect(() => {
+    dispatch(sortList(sort));
+  }, [sort]);
 
-      {modal ? <Modal addProduct={addProduct} closeModal={closeModal} /> : null}
-      <div className="products_wrapper">
-        {products.map((product) => (
-          <ProductCard
-            stock={product.stock}
-            name={product.name}
-            image={product.url}
-            weight={product.weight}
-            id={product.id}
-            key={product.id}
-            deleteProduct={deleteProduct}
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <ProductListView
+                sort={sort}
+                setSort={setSort}
+                addProduct={addProduct}
+                deleteProduct={deleteProduct}
+              />
+            }
           />
-        ))}
+          <Route path="/product/:id" element={<ProductView />}></Route>
+        </Routes>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

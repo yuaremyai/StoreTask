@@ -28,11 +28,11 @@ const productsSlice = createSlice({
       );
     },
 
-    sortList(state) {
-      state.products.sort(function(a, b){
+    sortList(state, action: PayloadAction<keyof IProduct>) {
+      state.products.sort((a, b) => {
         return compare( 
-            [compare(a.name, b.name), -compare(a.stock, b.stock)], 
-            [compare(b.name, a.name), -compare(b.stock, a.stock)]
+            [compare(a[action.payload], b[action.payload]), compare(a.stock, b.stock)], 
+            [compare(b[action.payload], a[action.payload]), compare(b.stock, a.stock)]
         );
       })
     },
